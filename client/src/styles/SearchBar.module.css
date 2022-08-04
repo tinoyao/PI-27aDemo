@@ -1,0 +1,95 @@
+.navBar {
+	margin: 0em 2em;
+	border-radius: 5px;
+	width: 100%;
+	padding: 2em;
+	display: flex;
+	justify-content: space-around;
+
+	background-color: #4B698B;
+}
+
+/* 
+EL MAS CLARO el hover del boton y input #738CA6
+
+EL INTERMEDIO el del seachbar #4B698B
+
+EL MAS FUERTE el del boton #133253
+
+TITULO silver
+
+*/
+
+.navBar_form {
+	width: 50%;
+	display: flex;
+	align-items: center;
+	margin-left: 1.5em;
+}
+
+.navBar_link {
+	width: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+.navBar_linkAnchor {
+	background-color: #738CA6;
+	text-decoration: none;
+	color: white;
+	padding: 0.6em;
+	border-radius: 8px;
+}
+
+.navBar_linkAnchor:hover {
+	background-color: #133253;
+}
+
+.navBar_input {
+	width: 80%;
+	border: 2px solid #e1e5ee;
+	border-radius: 8px;
+	padding: 0.5em;
+	margin-left: 1em;
+}
+
+.navBar_button {
+	border-radius: 8px;
+	border: none;
+	background-color: #738CA6;
+	color: white;
+	margin: 0.5em;
+	padding: 0.7em;
+	box-shadow: none;
+	cursor: pointer;
+}
+
+.navBar_button:hover {
+	background-color: #133253;
+}
+.navBar_input:hover {
+	border-color: #133253;
+}
+
+.navBar_input:focus {
+	border-color: #133253;
+	outline: none !important;
+}
+
+@media (max-width: 650px) {
+	.navBar {
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		gap: 3em;
+		width: 100%;
+		min-width: 300px;
+		padding: 1.5em;
+		margin: 0em;
+	}
+	.navBar_form {
+		flex-direction: column;
+		margin: 0;
+		width: 100%;
+	}
+}

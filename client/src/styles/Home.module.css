@@ -1,0 +1,216 @@
+.mainContainer {
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	gap: 2em;
+	padding: 0 !important;
+}
+
+/* .loading {
+	position: absolute;
+	border: 4px solid rgba(0, 0, 0, 0.1);
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	border-left-color: #fcbd37;
+
+	animation: spin 1s ease infinite;
+} */
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+.content {
+	display: grid;
+	height: 100%;
+	grid-template-areas:
+		"navbar navbar navbar navbar navbar navbar navbar navbar navbar navbar navbar navbar"
+		"filter recipes recipes recipes recipes recipes  recipes recipes recipes recipes recipes recipes"
+		"filter recipes recipes recipes recipes recipes  recipes recipes recipes recipes recipes recipes"
+		"filter recipes recipes recipes recipes recipes  recipes recipes recipes recipes recipes recipes"
+		;
+
+}
+
+/* .content {
+	display: grid;
+	height: 100%;
+	grid-template-areas:
+		"navbar navbar navbar navbar"
+		"filter recipes recipes recipes"
+		"filter recipes recipes recipes"
+		"filter recipes recipes recipes";
+
+} */
+
+.navbar {
+	grid-area: navbar;
+	width: 100vw;
+	display: flex;
+}
+
+.filters {
+	grid-area: filter;
+	padding: 10%;
+	display: flex;
+	flex-direction: column;
+}
+
+.recipesGrid {
+	grid-area: recipes;
+	margin-top: 3em;
+	margin-left: 1em;
+	margin-bottom: 6em;
+	width: 100%;
+}
+
+.filters_header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+	margin-bottom: 1em;
+	border: 0.1em solid rgb(204, 201, 201);
+	padding: 1em;
+	border-radius: 0.3em;
+}
+
+.filters_header h1 {
+	font-family: "Poppins", sans-serif;
+}
+.filters_header button {
+	border: none;
+	outline: none;
+	transition: all 0.1s ease-in;
+	padding: 1em;
+	margin: 1em 0em;
+	border-radius: 8px;
+	background-color: white;
+}
+
+.filters_header button:hover {
+	cursor: pointer;
+	background-color: #ffc547;
+	color: white;
+	border-radius: 8px;
+}
+
+.filters_dietSelect {
+	border: 0.1em solid rgb(204, 201, 201);
+	padding: 1em;
+	border-radius: 0.3em;
+}
+.filters_dietSelect select {
+	max-width: 100%;
+}
+
+.filters_dietSelected {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-start;
+	padding: 0;
+}
+.filters_dietSelected li {
+	list-style: none;
+	border-radius: 0.5em;
+	margin: 0.5em;
+	padding: 0.5em;
+	background-color: #ffc547;
+	color: white;
+}
+
+.filters_sortFilters {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5em;
+	border: 0.1em solid rgb(204, 201, 201);
+	padding: 1em;
+	margin-top: 2em;
+	border-radius: 0.3em;
+}
+
+.filters_sortFilters div {
+	display: flex;
+	justify-content: space-between;
+}
+.filters_sortFilters div input {
+	cursor: pointer;
+}
+.filters_sortFilters button {
+	border-radius: 0.5em;
+	border: none;
+	background-color: #fcad03;
+	color: white;
+	margin: 0.5em;
+	padding: 0.7em;
+	box-shadow: none;
+	cursor: pointer;
+}
+
+.filters_sortFilters button:hover {
+	background-color: #fcbd37;
+}
+
+.pagination {
+	padding-left: 6%;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	/* margin: 10em 10em 10em 20em; */
+}
+
+
+
+@media (max-width: 1700px) {
+	.content {
+		margin-bottom: 3em;
+	}
+	.pagination {
+		margin-top: 1em;
+	}
+}
+@media (max-width: 1180px) {
+	.content {
+		margin-bottom: 20em;
+	}
+	.pagination {
+		margin-top: 10em;
+	}
+}
+@media (max-width: 650px) {
+	.content {
+		grid-template-areas:
+			"navbar"
+			"filter"
+			"recipes";
+		min-width: 100%;
+	}
+	.navbar {
+		flex-direction: row;
+		width: 100%;
+		margin-left: 1em;
+	}
+	.recipesGrid {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		margin-bottom: 2em;
+		margin-left: 0.5em;
+	}
+
+	.pagination {
+		justify-content: center;
+		margin-top: 19em;
+	}
+}

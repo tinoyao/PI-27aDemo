@@ -1,0 +1,249 @@
+.detailContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding: 1em;
+	background-image: url("https://img.freepik.com/foto-gratis/ingredientes-cocinar-pasta-sobre-fondo-madera_23-2147925943.jpg?w=2000");
+	background-repeat: repeat;
+	background-size: cover;
+}
+
+.btn {
+	color: white;
+	text-decoration: none;
+	background-color: #133253;
+	border-radius: 0.3em;
+	padding: 1em;
+	margin-bottom: 1em;
+	font-weight: bold;
+}
+
+.btn:hover {
+	color: white;
+	text-decoration: none;
+	background-color: #738CA6;
+	border-radius: 0.3em;
+	padding: 1em;
+	margin-bottom: 1em;
+	font-weight: bold;
+}
+
+.loading {
+	position: absolute;
+	border: 4px solid rgba(0, 0, 0, 0.1);
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	border-left-color: #fcbd37;
+	margin-left: 2em;
+
+	animation: spin 1s ease infinite;
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}
+.detailContainer h1 {
+	background-color: white;
+	padding: 1em;
+	border-radius: 4px;
+	box-shadow: 2px 3px 6px 2px rgba(0, 0, 0, 0.23);
+	font-family: "Inconsolata", monospace;
+	font-weight: 400;
+}
+.detail_infoGrid {
+	display: grid;
+	grid-template-areas:
+		"image diets"
+		"image scores";
+	grid-template-columns: 30em 1fr;
+	background-color: #f1ece1;
+	padding: 2em;
+	border-radius: 4px;
+	box-shadow: 2px 3px 6px 2px rgba(0, 0, 0, 0.23);
+}
+.detail_image {
+	grid-area: image;
+}
+.detail_image img {
+	width: 90%;
+}
+.detail_dietsList {
+	grid-area: diets;
+	display: flex;
+	align-items: center;
+	margin-left: 1em;
+}
+.detail_dietsList ul {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.detail_dietsList ul li {
+	border-radius: 0.5em;
+	margin: 0.5em;
+	padding: 0.5em;
+	background-color: #738CA6 ;
+	color: white;
+	box-shadow: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.5em;
+	text-transform: uppercase;
+}
+
+.detail_scoreContainer {
+	grid-area: scores;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: row;
+	gap: 3em;
+	margin-left: 2em;
+}
+
+.healthScore {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	background-color: white;
+	padding: 1em;
+	border-radius: 8px;
+	width: 40%;
+	text-align: center;
+	height: 70%;
+	box-shadow: 2px 3px 6px 2px rgba(0, 0, 0, 0.23);
+}
+.healthScore span {
+	font-weight: bold;
+	font-size: 2em;
+}
+
+.normalScore {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	background-color: white;
+	padding: 1em;
+	border-radius: 8px;
+	width: 40%;
+	text-align: center;
+	height: 70%;
+	box-shadow: 2px 3px 6px 2px rgba(0, 0, 0, 0.23);
+	height: auto;
+  	word-wrap: break-word;
+}
+.normalScore span {
+	font-weight: bold;
+	font-size: 1em;
+}
+
+.dish {
+	/* list-style: none; */
+	text-align: left;
+}
+
+.detail_summaryContainer {
+	margin-top: 3em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	width: 70%;
+	background-color: #f1ece1;
+	padding: 2em;
+	border-radius: 4px;
+	box-shadow: 2px 3px 6px 2px rgba(0, 0, 0, 0.23);
+}
+.detail_summaryContainer h2 {
+	font-size: 2em;
+}
+
+.detail_summaryContent {
+	width: 70%;
+	line-height: 2em;
+	text-align: center;
+}
+
+.detail_stepContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	width: 70%;
+	margin: 2em;
+	background-color: #f1ece1;
+	padding: 2em;
+	border-radius: 4px;
+	box-shadow: 2px 3px 6px 2px rgba(0, 0, 0, 0.23);
+}
+.detail_stepContainer h2 {
+	font-size: 2em;
+}
+.detail_stepContainer_list {
+	list-style-type: none;
+	margin-bottom: 2em;
+	text-align: left;
+}
+
+.backToLink {
+	background-color: white;
+	text-decoration: none;
+
+	padding: 0.6em;
+	border-radius: 0.5em;
+}
+
+.backToLink:hover {
+	background-color: #e9a410;
+	color: white;
+}
+
+@media (max-width: 850px) {
+	.detail_infoGrid {
+		width: 90%;
+		grid-template-areas:
+			"image"
+			"diets"
+			"scores";
+		grid-template-columns: 1fr;
+		align-items: center;
+		justify-content: center;
+	}
+	.detail_image {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.detail_image img {
+		width: 60vw;
+	}
+	.detail_dietsList {
+		justify-content: center;
+	}
+
+	.detail_scoreContainer {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+}
+
+@media (max-width: 400px) {
+	.detailContainer {
+		width: 120%;
+	}
+	.detail_infoGrid {
+		padding: 1em 0.5em;
+	}
+}

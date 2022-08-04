@@ -1,0 +1,32 @@
+.paginado_contain {
+   margin: 20px 0;
+   /* background-color: aqua; */
+}
+
+.paginado_contain ul {
+    list-style: none;
+    text-align: center;
+}
+
+.paginado_contain ul li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.paginado_contain ul li a {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    /* background: #024959; */
+    background: #133253;
+    text-decoration: none;
+}
+
+.paginado_contain ul li a:hover {
+    background: #738CA6;
+}
+
+.paginado_contain ul li .active {
+    background: #037E8C;
+    font-weight: bold;
+}
