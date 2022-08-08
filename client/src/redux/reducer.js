@@ -6,7 +6,7 @@ const initialState = {
     allRecipes: [],
     diets: [],
     recipesRemix: [],
-    
+    recipesHealth: [],
 }
 
 function rootReducer(state= initialState, action) {
@@ -18,6 +18,7 @@ function rootReducer(state= initialState, action) {
                 recipes: action.payload,
                 allRecipes: action.payload,
                 recipesRemix: [...action.payload],
+                recipesHealth: action.payload,
             }
         case GET_NAME_RECIPES :
             return {
@@ -33,7 +34,7 @@ function rootReducer(state= initialState, action) {
             const allRecipes = state.allRecipes
             const dietsFiltered = action.payload === 'All' ? allRecipes : allRecipes.filter(el => el.diets.includes(action.payload.toLowerCase()))
             const filterFinal = action.payload === "All"
-            ? [...state.allRecipes]
+            ? [...state.recipesRemix]
             : [
                 ...state.allRecipes.filter((recipe) => {
                   if(recipe.diets.length > 0 && recipe.diets[0].name ){
@@ -61,11 +62,17 @@ function rootReducer(state= initialState, action) {
             const createdFilter = action.payload === 'Created' ? allRecipes2.filter(el => el.createdInDb) : allRecipes2.filter(el => !el.createdInDb)
             return {
                 ...state,
-                recipes: action.payload === 'All' ? state.allRecipes : createdFilter
+                recipes: action.payload === 'All' ? state.recipesRemix : createdFilter
             }
         case ORDER_BY_NAME :
             const todoRecipes = state.allRecipes
-            if (action.payload === "a-z" || action.payload === "") {
+            if(action.payload === 'Order') {
+                let filterTodo = state.recipesRemix
+                return {
+					...state,
+					recipes: filterTodo
+				};
+            } else if (action.payload === "a-z") {
 				let filterAZ = todoRecipes.sort((a, b) => {
 					if (a.name.toLowerCase() > b.name.toLowerCase()) {
 						return 1;
@@ -93,26 +100,35 @@ function rootReducer(state= initialState, action) {
 
 				return {
 					...state,
-					allRecipes: filterZA,
+					recipes: filterZA,
 				};
 			}
             case FILTER_HEALTHSCORE :
                 const todoRecipes2 = state.recipesRemix
-                let filteredHeathScore = [];
-                if (action.payload === "hasc") {
-                    filteredHeathScore = todoRecipes2.sort((a, b) => {
-                        return b.healthScore - a.healthScore;
-                    });
+                const todoHealth = state.recipesHealth
+                if(action.payload === "Nada") {
+                    return {
+                        ...state,
+                        recipes: todoRecipes2,
+                    };
                 } else {
-                    filteredHeathScore = todoRecipes2.sort((a, b) => {
-                        return a.healthScore - b.healthScore;
-                    });
-                }
+                    let filteredHeathScore = [];
+                    if (action.payload === "hasc") {
+                        filteredHeathScore = todoHealth.sort((a, b) => {
+                            return a.healthScore - b.healthScore;
+                        });
+                    } else {
+                        filteredHeathScore = todoHealth.sort((a, b) => {
+                            return b.healthScore - a.healthScore;
+                        });
+                    }
 
-                return {
-                    ...state,
-                    recipes: [...filteredHeathScore],
-                };
+                    return {
+                        ...state,
+                        recipes: [...filteredHeathScore],
+                    };
+                }
+                
         
         case GET_DETAILS :
             return {
@@ -123,6 +139,11 @@ function rootReducer(state= initialState, action) {
             return {
                 ...state,
                 detail: []
+            }
+        case 'RESET_RECIPES' :
+            return {
+                ...state,
+                recipes: []
             }
         
         default:

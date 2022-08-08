@@ -5,17 +5,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import styles from '../styles/RecipeCreate.module.css';
 
 
-function validate(input) {
-    let errors = {};
-    if(!input.name) {
-        errors.name = 'this field is required';
-    }else if(!input.summary) {
-        errors.summary = 'this field is required'
-    }else if(input.healthScore > 100 || input.healthScore < 0) {
-        errors.healthScore = 'enter numbers from 0 to 100'
-    }
-    return errors;
-}
+
+
 
 function RecipeCreate() {
     const dispatch= useDispatch()
@@ -23,7 +14,8 @@ function RecipeCreate() {
     const dietas = useSelector((state) => state.diets)
     const history = useHistory();
     const [steps, setSteps] = useState([{ stepInput: "", number: 0 }]);
-    const [errors, setErrors] = useState({});
+    /* const [errors, setErrors] = useState({}); */
+    
     
     const [input, setInput] = useState({
         image: '',
@@ -33,24 +25,21 @@ function RecipeCreate() {
         diets: [],
     })
 
-    //esta funcion lo que hace es modificar la propiedad del objeto del estado input
-    //por el valor de e.target.value
+
     function handleChange(e){
         setInput({
             ...input,
             [e.target.name] : e.target.value
         })
         
-        setErrors(validate({
+        /* setErrors(validate({
             ...input,
             [e.target.name] : e.target.value
-        }));
+        })); */
+        
     }
     
-    //traemos una copia de lo que hay en input
-    //y a la propiedad diets le asigno de valor lo que ya tiene osea me traigo una copia
-    //y le concateno lo que me pasan por el e.target.value
-    //basicamente lo que hace esta funcion es ir guardando en un arreglo todo los tipos de dietas que voy selecionando
+
     function handleSelect(e) {
         setInput({
             ...input,
@@ -97,20 +86,29 @@ function RecipeCreate() {
 
     function handleSubmit(e) {
         e.preventDefault();
-        dispatch(postRecipe(formatSend))
-        alert('Recipe created correctly')
-        //aca lo seteo a vacio despues de haberlo creado
-        setInput({
-            image: '',
-            name: '',
-            summary: '',
-            healthScore: '',
-            diets: [],
-        })
-        setSteps([{ stepInput: "", number: 0 }]);
-        //aca me vuelve a la ruta /home despues de haber creado mi receta pero esto es opcional
-        //lo puedo dejar que la persona vuelva sola
-        history.push('/home')
+
+        if (errorPoe) {
+            //aca no anda el alert porque si existe error
+            //me desabilita el boton, por lo tanto, nunca va a 
+            //mandar el alert
+            return;
+		} else {
+			dispatch(postRecipe(formatSend))
+            alert('Recipe created correctly')
+            
+            setInput({
+                image: '',
+                name: '',
+                summary: '',
+                healthScore: '',
+                diets: [],
+            })
+            setSteps([{ stepInput: "", number: 0 }]);
+            
+            history.push('/home')
+		};
+
+        
     }
 
     function handleDelete(el) {
@@ -123,6 +121,8 @@ function RecipeCreate() {
     useEffect(() => {
         dispatch(getDiets())
     },[]);
+
+    const errorPoe = validate(input, steps);
 
   return (
     <div>
@@ -144,7 +144,7 @@ function RecipeCreate() {
                         name= 'name'
                         onChange={(e)=> handleChange (e)}
                         />
-                        {errors.name && (<p className={styles.errorMessage}>{errors.name}</p>)}
+                        {/* {errors.name && (<p className={styles.errorMessage}>{errors.name}</p>)} */}
                     </div>
 
                     <div className={styles.inputContainer}>
@@ -157,7 +157,7 @@ function RecipeCreate() {
                             name= 'summary'
                             onChange={(e)=> handleChange (e)}
                         ></textarea>
-                        {errors.summary && (<p className={styles.errorMessage}>{errors.summary}</p>)}
+                        {/* {errors.summary && (<p className={styles.errorMessage}>{errors.summary}</p>)} */}
                     </div>
 
                     <div className={styles.scoresContainer}>
@@ -170,13 +170,14 @@ function RecipeCreate() {
                             name= 'healthScore'
                             onChange={(e)=> handleChange (e)}
                             />
-                            {errors.healthScore && (<p className={styles.errorMessage}>{errors.healthScore}</p>)}
+                           {/*  {errors.healthScore && (<p className={styles.errorMessage}>{errors.healthScore}</p>)} */}
                         </div>
                     </div>
 
                     <div className={styles.imageInputContainer}>
                         <label>IMAGE (URL)</label>
                         <input 
+                        placeholder='https://exaple.com'
                         className={styles.userInput}
                         type="text"
                         value={input.image}
@@ -241,15 +242,21 @@ function RecipeCreate() {
                 
                
             </div>
-            <button className={styles.form_submitButton} type='submit'>CREATE RECIPE</button>
+            <button className={styles.form_submitButton} type='submit' disabled={errorPoe} >CREATE RECIPE</button>
+                {errorPoe && (<p className={styles.errorMessage}>{errorPoe}</p>)}
         </form>
         
     </div>
   )
 }
 
+function validate(input, steps) {
+    if(!input.name) return 'Name is required';
+    if(!input.summary) return 'Summary is required';
+    if(input.healthScore > 100 || input.healthScore < 0 || !input.healthScore) return 'Enter numbers from 0 to 100';
+    if(!input.image) return 'Image is required';
+    if(!steps[0].stepInput) return 'One step is required';
+    if(input.diets.length < 1) return 'Diet is required';
+}
+
 export default RecipeCreate
-
-
-{/* el codigo de abajo es simplemente para que me aprarezca la lista de tipos de dietas que voy seleccionando */}
-{/* <ul><li>{input.diets.map(el => el + ' ,')}</li></ul> */}

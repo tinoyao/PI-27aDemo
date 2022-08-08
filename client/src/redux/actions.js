@@ -107,3 +107,9 @@ export function filterByHealthScore(payload) {
 		payload
 	};
 }
+
+export function resetRecipes () {
+    return {
+        type: 'RESET_RECIPES'
+    }
+}

@@ -5,19 +5,25 @@ import {useDispatch} from 'react-redux';
 import { getNameRecipes } from '../redux/actions';
 import styles from '../styles/SearchBar.module.css';
 
-function SearchBar() {
-    const dispatch= useDispatch()
-    const [name, setName] = useState('')
+function SearchBar({pages}) {
+  const dispatch= useDispatch()
+  const [name, setName] = useState('')
     
-    function handleInputChange (e){
-        e.preventDefault()
-        setName(e.target.value)
-    }
+  function handleInputChange (e){
+      setName(e.target.value)
+  }
 
-    function handleSubmit(e){
-        e.preventDefault()
-        dispatch(getNameRecipes(name))
-    }
+  function handleSubmit(e){
+      e.preventDefault()
+      dispatch(getNameRecipes(name))
+      setName("")
+      pages(1)
+  }
+
+  function handleReset() {
+    dispatch(getNameRecipes(name))
+    setName("")
+  }
 
   return (
     <div className={styles.navBar}>
@@ -38,6 +44,8 @@ function SearchBar() {
 					Create your own recipe!
 				</Link>
 			</div>
+
+      <button onClick={ () => handleReset() }>RESET</button>
     </div>
   )
 }

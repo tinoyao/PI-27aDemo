@@ -7,7 +7,7 @@
 	padding: 0 !important;
 }
 
-/* .loading {
+.loading {
 	position: absolute;
 	border: 4px solid rgba(0, 0, 0, 0.1);
 	width: 36px;
@@ -16,7 +16,7 @@
 	border-left-color: #fcbd37;
 
 	animation: spin 1s ease infinite;
-} */
+}
 
 @keyframes spin {
 	0% {
@@ -98,7 +98,7 @@
 
 .filters_header button:hover {
 	cursor: pointer;
-	background-color: #ffc547;
+	background-color: #133253;
 	color: white;
 	border-radius: 8px;
 }

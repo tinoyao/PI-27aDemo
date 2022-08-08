@@ -1,8 +1,8 @@
 
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import { getRecipes, filterRecipesByDiets, filterCreated, orderByName, filterByHealthScore } from '../redux/actions';
-import { Link } from 'react-router-dom';
+import { getRecipes, filterRecipesByDiets, filterCreated, orderByName, filterByHealthScore, resetRecipes } from '../redux/actions';
+
 import Paginado from './Paginado';
 import SearchBar from './SearchBar';
 import styles from '../styles/Home.module.css';
@@ -10,46 +10,52 @@ import Card22 from './Card22';
 
 function Home() {
     const dispatch = useDispatch()
-    //lo de abajo es lo mismo que hacer el mapStateToPros
-    //en seudocodigo lo leeria así: con useSelector, traeme en esa constante,
-    //todo lo que está en el estado de recipes
+    
+    const [loading, setLoading] = useState(false);
+    
     const allRecipes = useSelector((state) => state.recipes)
 
-    //ahora quiero tener varios estados locales,
-    //1ro quiero tener un estado con la pagina actual(1), y un estado que me setee la pagina actual
+    
     const [currentPage, setCurrentPage] = useState(1)
-    //2do un estado que me diga cuantas recetas tengo que mostrar por pagina, y el set
+    
     const [recipesPerPage, setRecipesPerPage] = useState(9)
     
-    const [orden, setOrden] = useState('')
+    const [orden, setOrden] = useState('')  // ESTADO QUE SOLO SE USA PARA VOLVER A RENDERIZAR EL HOME AL IMPLEMENTAR ORDENAMIENTOS QUE NO MODIFIQUEN EL LENGTH DE RECIPES
+    
+    const [btnHover, setBtnHover] = useState('')
 
     const indexOfLastRecipe = currentPage * recipesPerPage
     const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage
-    //lo que hago abajo con el slice es en la pagina 1 traerme las recetas desde el indice
-    //de la 1er receta hasta el indice de mi ultima receta ----> page 1= 0 -------> 8
-    //en la pagina 2 me va a traer desde el indice 9 al 17 ----> page 2= 9 -------> 17 etc
+    
     const currentRecipes = allRecipes.slice(indexOfFirstRecipe, indexOfLastRecipe)
 
-    //creo esto y ahora me voy al componente Paginado
+
+    
     const paginado = (pageNumbers) => {
         setCurrentPage(pageNumbers)
     }
 
 
-    //ahora tenemos que traernos del estado, las recetas cuando el componente se monta
-    //para eso usamos useEffect y dentro le pasamos un arrow function y
-    //despachamos la action que nos trae todas la recetas
-    //el dispatch que usamos abajo, es lo mismo que usar el mapDispatchToProps
+    
     useEffect(()=>{
-        dispatch(getRecipes())
+        const fetchPages = async () => {
+            setLoading(true)
+            dispatch(getRecipes())
+            setLoading(false)
+        }
+        fetchPages()
+
+        return ()=> {
+            dispatch(resetRecipes())
+          };
+
     },[dispatch])
 
-    //esta function es la que me va a volver a cargar la pagina
-    //y la voy a usar en el boton creado mas abajo
-    //esto me va a servir para cuando haga algun filtro o algo
+   
     function handleClick(e){
         e.preventDefault();
         dispatch(getRecipes());
+        setCurrentPage(1);
     }
 
     function handleSort (e) {
@@ -61,13 +67,15 @@ function Home() {
 
     function handleFilterDiets(e){
         dispatch(filterRecipesByDiets(e.target.value))
+        setCurrentPage(1)
     }
 
     function handleFilterCreated(e){
         dispatch(filterCreated(e.target.value))
+        setCurrentPage(1)
     }
     
-    //funcion para despachar la accion de filtrar el health score
+    
     function handleSortHealth (e) {
         e.preventDefault();
         dispatch(filterByHealthScore(e.target.value))
@@ -82,7 +90,7 @@ function Home() {
         <div  className={styles.content} >
             
             <div className={styles.navbar} >
-                <SearchBar />
+                <SearchBar pages={setCurrentPage} />
             </div>
             
             <div className={styles.filters} >
@@ -132,10 +140,18 @@ function Home() {
                     </select>
                 </div>
             </div>
+
+            {loading ? (
+                <div className={styles.recipesGrid}>
+                    <span className={styles.loading}></span>
+                </div>
+            ) : (
+                <div className={styles.recipesGrid} >
+                    <Card22 recipes={currentRecipes} />
+                </div>
+            )}
             
-            <div className={styles.recipesGrid} >
-                <Card22 recipes={currentRecipes} />
-            </div>
+            
         </div>
 
         <div  className={styles.pagination} >
@@ -144,6 +160,7 @@ function Home() {
             allRecipes={allRecipes.length}
             paginado={paginado}
             />
+            {/* <span>{currentPage}</span> */}
         </div>
        
     </div>
